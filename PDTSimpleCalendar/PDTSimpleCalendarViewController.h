@@ -82,7 +82,6 @@
  */
 @property (nonatomic, weak) id<PDTSimpleCalendarViewDelegate> delegate;
 
-
 /**
  *  Scroll to the current selected date in the calendar.
  *

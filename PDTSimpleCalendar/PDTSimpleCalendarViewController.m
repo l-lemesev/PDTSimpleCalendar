@@ -32,6 +32,7 @@ static const NSCalendarUnit kCalendarUnitYMD = NSCalendarUnitYear | NSCalendarUn
 
 //Number of days per week
 @property (nonatomic, assign) NSUInteger daysPerWeek;
+@property (nonatomic, assign) BOOL reverse;
 
 @end
 
@@ -116,7 +117,7 @@ static const NSCalendarUnit kCalendarUnitYMD = NSCalendarUnitYear | NSCalendarUn
 - (NSCalendar *)calendar
 {
     if (!_calendar) {
-        [self setCalendar:[NSCalendar currentCalendar]];
+        [self setCalendar:[NSCalendar calendarWithIdentifier:NSGregorianCalendar]];
     }
     return _calendar;
 }
@@ -134,7 +135,7 @@ static const NSCalendarUnit kCalendarUnitYMD = NSCalendarUnitYear | NSCalendarUn
         NSDateComponents *components = [self.calendar components:kCalendarUnitYMD
                                                         fromDate:[NSDate date]];
         components.day = 1;
-        _firstDate = [self.calendar dateFromComponents:components];
+        [self setFirstDate:[self.calendar dateFromComponents:components]];
     }
 
     return _firstDate;
@@ -143,6 +144,7 @@ static const NSCalendarUnit kCalendarUnitYMD = NSCalendarUnitYear | NSCalendarUn
 - (void)setFirstDate:(NSDate *)firstDate
 {
     _firstDate = [self clampDate:firstDate toComponents:kCalendarUnitYMD];
+    [self checkReverse];
 }
 
 - (NSDate *)firstDateMonth
@@ -173,6 +175,7 @@ static const NSCalendarUnit kCalendarUnitYMD = NSCalendarUnitYear | NSCalendarUn
 - (void)setLastDate:(NSDate *)lastDate
 {
     _lastDate = [self clampDate:lastDate toComponents:kCalendarUnitYMD];
+    [self checkReverse];
 }
 
 - (NSDate *)lastDateMonth
@@ -181,7 +184,12 @@ static const NSCalendarUnit kCalendarUnitYMD = NSCalendarUnitYear | NSCalendarUn
 
     NSDateComponents *components = [self.calendar components:kCalendarUnitYMD
                                                     fromDate:self.lastDate];
-    components.month++;
+    if (self.reverse) {
+        components.month--;
+    } else {
+        components.month++;
+    }
+    
     components.day = 0;
 
     _lastDateMonth = [self.calendar dateFromComponents:components];
@@ -218,6 +226,15 @@ static const NSCalendarUnit kCalendarUnitYMD = NSCalendarUnitYear | NSCalendarUn
     //Notify the delegate
     if ([self.delegate respondsToSelector:@selector(simpleCalendarViewController:didSelectDate:)]) {
         [self.delegate simpleCalendarViewController:self didSelectDate:self.selectedDate];
+    }
+}
+
+- (void)checkReverse {
+    NSComparisonResult result = [self.firstDate compare:self.lastDate];
+    if (result == NSOrderedAscending || result == NSOrderedSame) {
+        self.reverse = NO;
+    } else if (result == NSOrderedDescending) {
+        self.reverse = YES;
     }
 }
 
@@ -319,7 +336,13 @@ static const NSCalendarUnit kCalendarUnitYMD = NSCalendarUnitYear | NSCalendarUn
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
     //Each Section is a Month
-    return [self.calendar components:NSCalendarUnitMonth fromDate:self.firstDateMonth toDate:self.lastDateMonth options:0].month + 1;
+    NSInteger numberOfMonths = [self.calendar components:NSCalendarUnitMonth fromDate:self.firstDateMonth toDate:self.lastDateMonth options:0].month;
+    
+    if (!self.reverse) {
+        numberOfMonths ++;
+    }
+
+    return labs(numberOfMonths);
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -353,7 +376,6 @@ static const NSCalendarUnit kCalendarUnitYMD = NSCalendarUnitYear | NSCalendarUn
 #pragma clang diagnostic pop
     }
 }
-
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -544,14 +566,14 @@ static const NSCalendarUnit kCalendarUnitYMD = NSCalendarUnitYear | NSCalendarUn
 - (NSDate *)firstOfMonthForSection:(NSInteger)section
 {
     NSDateComponents *offset = [NSDateComponents new];
-    offset.month = section;
+    offset.month = self.reverse ? -section : section;
 
     return [self.calendar dateByAddingComponents:offset toDate:self.firstDateMonth options:0];
 }
 
 - (NSInteger)sectionForDate:(NSDate *)date
 {
-    return [self.calendar components:NSCalendarUnitMonth fromDate:self.firstDateMonth toDate:date options:0].month;
+    return labs([self.calendar components:NSCalendarUnitMonth fromDate:self.firstDateMonth toDate:date options:0].month);
 }
 
 

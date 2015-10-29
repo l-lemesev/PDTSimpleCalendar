@@ -279,6 +279,7 @@
 				89875F461B755A5400CE4345 /* Frameworks */,
 				89875F471B755A5400CE4345 /* Resources */,
 				CCD1FCB2FEBF4BC55BA9D2F1 /* Copy Pods Resources */,
+				2617F95E067F8D43F3FF6D24 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -359,6 +360,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		2617F95E067F8D43F3FF6D24 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PDTSimpleCalendarTests/Pods-PDTSimpleCalendarTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		CCD1FCB2FEBF4BC55BA9D2F1 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

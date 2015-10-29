@@ -31,6 +31,9 @@
     [calendarViewController setDelegate:self];
     calendarViewController.weekdayHeaderEnabled = YES;
     calendarViewController.weekdayTextType = PDTSimpleCalendarViewWeekdayTextTypeVeryShort;
+    calendarViewController.firstDate = [NSDate date];
+    NSCalendar *cal = [NSCalendar calendarWithIdentifier:NSGregorianCalendar];
+    calendarViewController.lastDate = [cal dateByAddingUnit:NSYearCalendarUnit value:-1 toDate:[NSDate date] options:0];
 
     PDTSimpleCalendarViewController *hebrewCalendarViewController = [[PDTSimpleCalendarViewController alloc] init];
     //Example of how you can change the default calendar

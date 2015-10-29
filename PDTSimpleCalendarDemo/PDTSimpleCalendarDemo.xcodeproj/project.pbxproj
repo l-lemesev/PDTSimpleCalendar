@@ -158,7 +158,7 @@
 			attributes = {
 				CLASSPREFIX = PDT;
 				LastTestingUpgradeCheck = 0610;
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = Producteev;
 			};
 			buildConfigurationList = 8959430C180CB350007DEC5D /* Build configuration list for PBXProject "PDTSimpleCalendarDemo" */;
@@ -237,6 +237,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -299,6 +300,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PDTSimpleCalendarDemo/PDTSimpleCalendarDemo-Prefix.pch";
 				INFOPLIST_FILE = "PDTSimpleCalendarDemo/PDTSimpleCalendarDemo-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.producteev.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -312,6 +314,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PDTSimpleCalendarDemo/PDTSimpleCalendarDemo-Prefix.pch";
 				INFOPLIST_FILE = "PDTSimpleCalendarDemo/PDTSimpleCalendarDemo-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.producteev.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
