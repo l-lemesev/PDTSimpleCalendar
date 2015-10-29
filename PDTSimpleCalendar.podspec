@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "PDTSimpleCalendar"
-  s.version      = "0.9.1"
+  s.version      = "0.9.2"
   s.summary      = "A simple Calendar/Date Picker with a nice iOS7/iOS8 design."
 
   s.description  = <<-DESC
@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.license      = 'Apache License, Version 2.0'
   s.author       = { "Jerome Miglino" => "jerome.miglino@jivesoftware.com" }
   s.platform     = :ios, '6.0'
-  s.source       = { :git => "https://github.com/jivesoftware/PDTSimpleCalendar.git", :tag => s.version.to_s }
+  s.source       = { :git => "https://github.com/l-lemesev/PDTSimpleCalendar.git", :tag => s.version.to_s }
   s.source_files  = 'PDTSimpleCalendar/**/*.{h,m}'
   s.requires_arc = true
 
