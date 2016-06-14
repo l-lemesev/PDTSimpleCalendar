@@ -21,18 +21,15 @@ const CGFloat PDTSimpleCalendarCircleSize = 32.0f;
 
 #pragma mark - Class Methods
 
-+ (NSString *)formatDate:(NSDate *)date withCalendar:(NSCalendar *)calendar
-{
++ (NSString *)formatDate:(NSDate *)date withCalendar:(NSCalendar *)calendar {
     NSDateFormatter *dateFormatter = [self dateFormatter];
     return [PDTSimpleCalendarViewCell stringFromDate:date withDateFormatter:dateFormatter withCalendar:calendar];
 }
 
-+ (NSString *)formatAccessibilityDate:(NSDate *)date withCalendar:(NSCalendar *)calendar
-{
++ (NSString *)formatAccessibilityDate:(NSDate *)date withCalendar:(NSCalendar *)calendar {
     NSDateFormatter *dateFormatter = [self accessibilityDateFormatter];
     return [PDTSimpleCalendarViewCell stringFromDate:date withDateFormatter:dateFormatter withCalendar:calendar];
 }
-
 
 + (NSDateFormatter *)dateFormatter {
     static NSDateFormatter *dateFormatter;
@@ -51,7 +48,6 @@ const CGFloat PDTSimpleCalendarCircleSize = 32.0f;
         dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateStyle:NSDateFormatterLongStyle];
         [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
-        
     });
     return dateFormatter;
 }
@@ -66,8 +62,7 @@ const CGFloat PDTSimpleCalendarCircleSize = 32.0f;
 
 #pragma mark - Instance Methods
 
-- (id)initWithFrame:(CGRect)frame
-{
+- (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         _date = nil;
@@ -80,7 +75,7 @@ const CGFloat PDTSimpleCalendarCircleSize = 32.0f;
         //Add the Constraints
         [self.dayLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
         [self.dayLabel setBackgroundColor:[UIColor clearColor]];
-        self.dayLabel.layer.cornerRadius = PDTSimpleCalendarCircleSize/2;
+        self.dayLabel.layer.cornerRadius = PDTSimpleCalendarCircleSize / 2;
         self.dayLabel.layer.masksToBounds = YES;
 
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.dayLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
@@ -94,10 +89,9 @@ const CGFloat PDTSimpleCalendarCircleSize = 32.0f;
     return self;
 }
 
-- (void)setDate:(NSDate *)date calendar:(NSCalendar *)calendar
-{
-    NSString* day = @"";
-    NSString* accessibilityDay = @"";
+- (void)setDate:(NSDate *)date calendar:(NSCalendar *)calendar {
+    NSString *day = @"";
+    NSString *accessibilityDay = @"";
     if (date && calendar) {
         _date = date;
         day = [PDTSimpleCalendarViewCell formatDate:date withCalendar:calendar];
@@ -107,27 +101,22 @@ const CGFloat PDTSimpleCalendarCircleSize = 32.0f;
     self.dayLabel.accessibilityLabel = accessibilityDay;
 }
 
-- (void)setIsToday:(BOOL)isToday
-{
+- (void)setIsToday:(BOOL)isToday {
     _isToday = isToday;
     [self setCircleColor:isToday selected:self.selected];
 }
 
-- (void)setSelected:(BOOL)selected
-{
+- (void)setSelected:(BOOL)selected {
     [super setSelected:selected];
     [self setCircleColor:self.isToday selected:selected];
 }
 
-
-- (void)setCircleColor:(BOOL)today selected:(BOOL)selected
-{
+- (void)setCircleColor:(BOOL)today selected:(BOOL)selected {
     UIColor *circleColor = (today) ? [self circleTodayColor] : [self circleDefaultColor];
     UIColor *labelColor = (today) ? [self textTodayColor] : [self textDefaultColor];
 
     if (self.date && self.delegate) {
         if ([self.delegate respondsToSelector:@selector(simpleCalendarViewCell:shouldUseCustomColorsForDate:)] && [self.delegate simpleCalendarViewCell:self shouldUseCustomColorsForDate:self.date]) {
-
             if ([self.delegate respondsToSelector:@selector(simpleCalendarViewCell:textColorForDate:)] && [self.delegate simpleCalendarViewCell:self textColorForDate:self.date]) {
                 labelColor = [self.delegate simpleCalendarViewCell:self textColorForDate:self.date];
             }
@@ -137,27 +126,18 @@ const CGFloat PDTSimpleCalendarCircleSize = 32.0f;
             }
         }
     }
-    
-    if (selected) {
-        circleColor = [self circleSelectedColor];
-        labelColor = [self textSelectedColor];
-    }
 
     [self.dayLabel setBackgroundColor:circleColor];
     [self.dayLabel setTextColor:labelColor];
 }
 
-
-- (void)refreshCellColors
-{
+- (void)refreshCellColors {
     [self setCircleColor:self.isToday selected:self.isSelected];
 }
 
-
 #pragma mark - Prepare for Reuse
 
-- (void)prepareForReuse
-{
+- (void)prepareForReuse {
     [super prepareForReuse];
     _date = nil;
     _isToday = NO;
@@ -168,39 +148,36 @@ const CGFloat PDTSimpleCalendarCircleSize = 32.0f;
 
 #pragma mark - Circle Color Customization Methods
 
-- (UIColor *)circleDefaultColor
-{
-    if(_circleDefaultColor == nil) {
+- (UIColor *)circleDefaultColor {
+    if (_circleDefaultColor == nil) {
         _circleDefaultColor = [[[self class] appearance] circleDefaultColor];
     }
 
-    if(_circleDefaultColor != nil) {
+    if (_circleDefaultColor != nil) {
         return _circleDefaultColor;
     }
 
     return [UIColor whiteColor];
 }
 
-- (UIColor *)circleTodayColor
-{
-    if(_circleTodayColor == nil) {
+- (UIColor *)circleTodayColor {
+    if (_circleTodayColor == nil) {
         _circleTodayColor = [[[self class] appearance] circleTodayColor];
     }
 
-    if(_circleTodayColor != nil) {
+    if (_circleTodayColor != nil) {
         return _circleTodayColor;
     }
 
     return [UIColor grayColor];
 }
 
-- (UIColor *)circleSelectedColor
-{
-    if(_circleSelectedColor == nil) {
+- (UIColor *)circleSelectedColor {
+    if (_circleSelectedColor == nil) {
         _circleSelectedColor = [[[self class] appearance] circleSelectedColor];
     }
 
-    if(_circleSelectedColor != nil) {
+    if (_circleSelectedColor != nil) {
         return _circleSelectedColor;
     }
 
@@ -209,52 +186,48 @@ const CGFloat PDTSimpleCalendarCircleSize = 32.0f;
 
 #pragma mark - Text Label Customizations Color
 
-- (UIColor *)textDefaultColor
-{
-    if(_textDefaultColor == nil) {
+- (UIColor *)textDefaultColor {
+    if (_textDefaultColor == nil) {
         _textDefaultColor = [[[self class] appearance] textDefaultColor];
     }
 
-    if(_textDefaultColor != nil) {
+    if (_textDefaultColor != nil) {
         return _textDefaultColor;
     }
 
     return [UIColor blackColor];
 }
 
-- (UIColor *)textTodayColor
-{
-    if(_textTodayColor == nil) {
+- (UIColor *)textTodayColor {
+    if (_textTodayColor == nil) {
         _textTodayColor = [[[self class] appearance] textTodayColor];
     }
 
-    if(_textTodayColor != nil) {
+    if (_textTodayColor != nil) {
         return _textTodayColor;
     }
 
     return [UIColor whiteColor];
 }
 
-- (UIColor *)textSelectedColor
-{
-    if(_textSelectedColor == nil) {
+- (UIColor *)textSelectedColor {
+    if (_textSelectedColor == nil) {
         _textSelectedColor = [[[self class] appearance] textSelectedColor];
     }
 
-    if(_textSelectedColor != nil) {
+    if (_textSelectedColor != nil) {
         return _textSelectedColor;
     }
 
     return [UIColor whiteColor];
 }
 
-- (UIColor *)textDisabledColor
-{
-    if(_textDisabledColor == nil) {
+- (UIColor *)textDisabledColor {
+    if (_textDisabledColor == nil) {
         _textDisabledColor = [[[self class] appearance] textDisabledColor];
     }
 
-    if(_textDisabledColor != nil) {
+    if (_textDisabledColor != nil) {
         return _textDisabledColor;
     }
 
@@ -263,9 +236,8 @@ const CGFloat PDTSimpleCalendarCircleSize = 32.0f;
 
 #pragma mark - Text Label Customizations Font
 
-- (UIFont *)textDefaultFont
-{
-    if(_textDefaultFont == nil) {
+- (UIFont *)textDefaultFont {
+    if (_textDefaultFont == nil) {
         _textDefaultFont = [[[self class] appearance] textDefaultFont];
     }
 
