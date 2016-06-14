@@ -10,10 +10,32 @@
 
 const CGFloat PDTSimpleCalendarCircleSize = 32.0f;
 
+CGFloat const radiusCircle = 12.0f;
+CGFloat const offsetCircle = 2.0f;
+
+CGFloat const lineWidth = 1.0f;
+CGFloat const startRadius = PDTSimpleCalendarCircleSize / 2 + 2;
+CGFloat const stepRadius = 1.0f;
+CGFloat const radiusSpacing = 1.0f;
+
+CGFloat const startAngle = 270.0f; // Angle we start our calculations from.
+CGFloat const firstArcStartAngle = startAngle - 15.0f;
+CGFloat const firstArcEndAngle = startAngle + 90.0f;
+
+CGFloat const secondArcStartAngle = startAngle;
+CGFloat const secondArcEndAngle = startAngle + 75.0f;
+
+CGFloat const thirdArcStartAngle = startAngle + 15.0f;
+CGFloat const thirdArcEndAngle = startAngle + 60;
+
+
 @interface PDTSimpleCalendarViewCell ()
 
 @property (nonatomic, strong) UILabel *dayLabel;
 @property (nonatomic, strong) NSDate *date;
+@property (nonatomic, strong) CAShapeLayer *firstArcLayer;
+@property (nonatomic, strong) CAShapeLayer *secondArcLayer;
+@property (nonatomic, strong) CAShapeLayer *thirdArcLayer;
 
 @end
 
@@ -117,6 +139,11 @@ const CGFloat PDTSimpleCalendarCircleSize = 32.0f;
 {
     [super setSelected:selected];
     [self setCircleColor:self.isToday selected:selected];
+    if (!selected) {
+        [self.firstArcLayer removeFromSuperlayer];
+        [self.secondArcLayer removeFromSuperlayer];
+        [self.thirdArcLayer removeFromSuperlayer];
+    }
 }
 
 
@@ -153,6 +180,25 @@ const CGFloat PDTSimpleCalendarCircleSize = 32.0f;
     [self setCircleColor:self.isToday selected:self.isSelected];
 }
 
+- (void)setNumberOfItems:(NSInteger)numberOfItems {
+    if (numberOfItems > 0 && self.date) {
+        self.selected = YES;
+        if (numberOfItems == 2) {
+            [self drawFirstArc];
+        } else if (numberOfItems == 3) {
+            [self drawFirstArc];
+            [self drawSecondArc];
+        } else if (numberOfItems > 3) {
+            [self drawFirstArc];
+            [self drawSecondArc];
+            [self drawThirdArc];
+        }
+    } else {
+        [self.firstArcLayer removeFromSuperlayer];
+        [self.secondArcLayer removeFromSuperlayer];
+        [self.thirdArcLayer removeFromSuperlayer];
+    }
+}
 
 #pragma mark - Prepare for Reuse
 
@@ -261,6 +307,18 @@ const CGFloat PDTSimpleCalendarCircleSize = 32.0f;
     return [UIColor lightGrayColor];
 }
 
+- (UIColor *)itemSelectionColor {
+    if (_itemSelectionColor == nil) {
+        _itemSelectionColor = [[[self class] appearance] itemSelectionColor];
+    }
+    
+    if (_itemSelectionColor != nil) {
+        return _itemSelectionColor;
+    }
+    
+    return [UIColor whiteColor];
+}
+
 #pragma mark - Text Label Customizations Font
 
 - (UIFont *)textDefaultFont
@@ -275,6 +333,40 @@ const CGFloat PDTSimpleCalendarCircleSize = 32.0f;
 
     // default system font
     return [UIFont systemFontOfSize:17.0];
+}
+
+#pragma mark - Items selection 
+
+- (void)drawFirstArc {
+    self.firstArcLayer = [self addArcWithRadius:startRadius startAngle:firstArcStartAngle endAngle:firstArcEndAngle];
+}
+
+- (void)drawSecondArc {
+    self.secondArcLayer = [self addArcWithRadius:startRadius + stepRadius + radiusSpacing startAngle:secondArcStartAngle endAngle:secondArcEndAngle];
+}
+
+- (void)drawThirdArc {
+    self.thirdArcLayer = [self addArcWithRadius:startRadius + stepRadius * 2 + radiusSpacing * 2 startAngle:thirdArcStartAngle endAngle:thirdArcEndAngle];
+}
+
+- (CAShapeLayer *)addArcWithRadius:(CGFloat)radius startAngle:(CGFloat)startAngle endAngle:(CGFloat)endAngle {
+    CAShapeLayer *circle = [CAShapeLayer layer];
+    CGPoint center = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
+    UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:center radius:radius startAngle:radians(startAngle) endAngle:radians(endAngle) clockwise:YES];
+    
+    circle.path = [path CGPath];
+    circle.fillColor = [UIColor clearColor].CGColor;
+    circle.lineCap = kCALineCapRound;
+    
+    UIColor *strokeColor = self.circleSelectedColor;
+    circle.strokeColor = strokeColor.CGColor;
+    circle.lineWidth = lineWidth;
+    [self.layer addSublayer:circle];
+    return circle;
+}
+
+static inline double radians(double degrees) {
+    return degrees * M_PI / 180;
 }
 
 @end

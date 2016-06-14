@@ -146,6 +146,12 @@
     return [UIColor orangeColor];
 }
 
+- (NSInteger)simpleCalendarViewController:(PDTSimpleCalendarViewController *)controller numberOfItemsForDate:(NSDate *)date {
+    NSCalendar *cal = [NSCalendar calendarWithIdentifier:NSGregorianCalendar];
+    NSDateComponents *comps = [cal components:kCalendarUnitYMD fromDate:date];
+    return comps.day % 5;
+}
+
 #pragma mark - Private
 
 //Add 3 custom dates, the 15th for the current & 2 next months.

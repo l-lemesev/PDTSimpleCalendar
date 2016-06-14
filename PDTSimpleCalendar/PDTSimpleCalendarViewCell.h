@@ -103,9 +103,19 @@
 @property (nonatomic, strong) UIColor *textDisabledColor UI_APPEARANCE_SELECTOR;
 
 /**
+ *
+ */
+@property (nonatomic, strong) UIColor *itemSelectionColor UI_APPEARANCE_SELECTOR;
+
+/**
  *  Customize the day's number font using UIAppearance.
  */
 @property (nonatomic, strong) UIFont *textDefaultFont UI_APPEARANCE_SELECTOR;
+
+/**
+ *
+ */
+@property (nonatomic, assign) NSInteger numberOfItems;
 
 /**
  * Set the date for this cell

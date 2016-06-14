@@ -17,7 +17,6 @@ const CGFloat PDTSimpleCalendarOverlaySize = 14.0f;
 
 static NSString *const PDTSimpleCalendarViewCellIdentifier = @"com.producteev.collection.cell.identifier";
 static NSString *const PDTSimpleCalendarViewHeaderIdentifier = @"com.producteev.collection.header.identifier";
-static const NSCalendarUnit kCalendarUnitYMD = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;
 
 @interface PDTSimpleCalendarViewController () <PDTSimpleCalendarViewCellDelegate>
 
@@ -229,7 +228,8 @@ static const NSCalendarUnit kCalendarUnitYMD = NSCalendarUnitYear | NSCalendarUn
     }
 }
 
-- (void)checkReverse {
+- (void)checkReverse
+{
     NSComparisonResult result = [self.firstDate compare:self.lastDate];
     if (result == NSOrderedAscending || result == NSOrderedSame) {
         self.reverse = NO;
@@ -330,7 +330,6 @@ static const NSCalendarUnit kCalendarUnitYMD = NSCalendarUnitYear | NSCalendarUn
     [self.collectionView.collectionViewLayout invalidateLayout];
 }
 
-
 #pragma mark - Collection View Data Source
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -386,7 +385,7 @@ static const NSCalendarUnit kCalendarUnitYMD = NSCalendarUnitYear | NSCalendarUn
     
     NSDate *firstOfMonth = [self firstOfMonthForSection:indexPath.section];
     NSDate *cellDate = [self dateForCellAtIndexPath:indexPath];
-
+    
     NSDateComponents *cellDateComponents = [self.calendar components:kCalendarUnitYMD fromDate:cellDate];
     NSDateComponents *firstOfMonthsComponents = [self.calendar components:kCalendarUnitYMD fromDate:firstOfMonth];
 
@@ -403,8 +402,6 @@ static const NSCalendarUnit kCalendarUnitYMD = NSCalendarUnitYear | NSCalendarUn
         if ([self.delegate respondsToSelector:@selector(simpleCalendarViewController:shouldUseCustomColorsForDate:)]) {
             isCustomDate = [self.delegate simpleCalendarViewController:self shouldUseCustomColorsForDate:cellDate];
         }
-
-
     } else {
         [cell setDate:nil calendar:nil];
     }
@@ -420,6 +417,10 @@ static const NSCalendarUnit kCalendarUnitYMD = NSCalendarUnitYear | NSCalendarUn
     //If the current Date is not enabled, or if the delegate explicitely specify custom colors
     if (![self isEnabledDate:cellDate] || isCustomDate) {
         [cell refreshCellColors];
+    }
+    
+    if ([self.delegate respondsToSelector:@selector(simpleCalendarViewController:numberOfItemsForDate:)]) {
+        cell.numberOfItems = [self.delegate simpleCalendarViewController:self numberOfItemsForDate:cellDate];
     }
 
     //We rasterize the cell for performances purposes.
@@ -541,13 +542,13 @@ static const NSCalendarUnit kCalendarUnitYMD = NSCalendarUnitYear | NSCalendarUn
 
 - (BOOL)isEnabledDate:(NSDate *)date
 {
+    if ([self.delegate respondsToSelector:@selector(simpleCalendarViewController:isEnabledDate:)]) {
+        return [self.delegate simpleCalendarViewController:self isEnabledDate:date];
+    }
+    
     NSDate *clampedDate = [self clampDate:date toComponents:kCalendarUnitYMD];
     if (([clampedDate compare:self.firstDate] == NSOrderedAscending) || ([clampedDate compare:self.lastDate] == NSOrderedDescending)) {
         return NO;
-    }
-
-    if ([self.delegate respondsToSelector:@selector(simpleCalendarViewController:isEnabledDate:)]) {
-        return [self.delegate simpleCalendarViewController:self isEnabledDate:date];
     }
 
     return YES;

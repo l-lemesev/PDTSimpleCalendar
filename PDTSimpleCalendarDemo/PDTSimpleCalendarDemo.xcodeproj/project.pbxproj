@@ -19,6 +19,8 @@
 		8959434D180CB47B007DEC5D /* PDTSimpleCalendarViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 89594347180CB47B007DEC5D /* PDTSimpleCalendarViewCell.m */; };
 		8959434E180CB47B007DEC5D /* PDTSimpleCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89594349180CB47B007DEC5D /* PDTSimpleCalendarViewController.m */; };
 		8959434F180CB47B007DEC5D /* PDTSimpleCalendarViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 8959434B180CB47B007DEC5D /* PDTSimpleCalendarViewFlowLayout.m */; };
+		AD0F60401BE36E8D0003B1F4 /* PDTSimpleCalendarViewCell_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = AD0F603F1BE36E8D0003B1F4 /* PDTSimpleCalendarViewCell_iPad.m */; };
+		AD0F60431BE36F060003B1F4 /* PDTSimpleCalendarViewFlowLayout_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = AD0F60421BE36F060003B1F4 /* PDTSimpleCalendarViewFlowLayout_iPad.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +47,10 @@
 		8959434A180CB47B007DEC5D /* PDTSimpleCalendarViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDTSimpleCalendarViewFlowLayout.h; path = ../PDTSimpleCalendar/PDTSimpleCalendarViewFlowLayout.h; sourceTree = "<group>"; };
 		8959434B180CB47B007DEC5D /* PDTSimpleCalendarViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PDTSimpleCalendarViewFlowLayout.m; path = ../PDTSimpleCalendar/PDTSimpleCalendarViewFlowLayout.m; sourceTree = "<group>"; };
 		89D411BF18109DA1001584CC /* PDTSimpleCalendar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PDTSimpleCalendar.h; path = ../PDTSimpleCalendar/PDTSimpleCalendar.h; sourceTree = "<group>"; };
+		AD0F603E1BE36E8D0003B1F4 /* PDTSimpleCalendarViewCell_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDTSimpleCalendarViewCell_iPad.h; path = ../PDTSimpleCalendar/PDTSimpleCalendarViewCell_iPad.h; sourceTree = "<group>"; };
+		AD0F603F1BE36E8D0003B1F4 /* PDTSimpleCalendarViewCell_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PDTSimpleCalendarViewCell_iPad.m; path = ../PDTSimpleCalendar/PDTSimpleCalendarViewCell_iPad.m; sourceTree = "<group>"; };
+		AD0F60411BE36F060003B1F4 /* PDTSimpleCalendarViewFlowLayout_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PDTSimpleCalendarViewFlowLayout_iPad.h; path = ../PDTSimpleCalendar/PDTSimpleCalendarViewFlowLayout_iPad.h; sourceTree = "<group>"; };
+		AD0F60421BE36F060003B1F4 /* PDTSimpleCalendarViewFlowLayout_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PDTSimpleCalendarViewFlowLayout_iPad.m; path = ../PDTSimpleCalendar/PDTSimpleCalendarViewFlowLayout_iPad.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +132,10 @@
 				8959434B180CB47B007DEC5D /* PDTSimpleCalendarViewFlowLayout.m */,
 				1B4E30FA1B6FB97F00BF77A7 /* PDTSimpleCalendarViewWeekdayHeader.h */,
 				1B4E30FB1B6FB97F00BF77A7 /* PDTSimpleCalendarViewWeekdayHeader.m */,
+				AD0F603E1BE36E8D0003B1F4 /* PDTSimpleCalendarViewCell_iPad.h */,
+				AD0F603F1BE36E8D0003B1F4 /* PDTSimpleCalendarViewCell_iPad.m */,
+				AD0F60411BE36F060003B1F4 /* PDTSimpleCalendarViewFlowLayout_iPad.h */,
+				AD0F60421BE36F060003B1F4 /* PDTSimpleCalendarViewFlowLayout_iPad.m */,
 			);
 			name = PDTSimpleCalendar;
 			sourceTree = "<group>";
@@ -195,12 +205,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD0F60431BE36F060003B1F4 /* PDTSimpleCalendarViewFlowLayout_iPad.m in Sources */,
 				8959434E180CB47B007DEC5D /* PDTSimpleCalendarViewController.m in Sources */,
 				89594321180CB350007DEC5D /* main.m in Sources */,
 				1B4E30FC1B6FB97F00BF77A7 /* PDTSimpleCalendarViewWeekdayHeader.m in Sources */,
 				8959434F180CB47B007DEC5D /* PDTSimpleCalendarViewFlowLayout.m in Sources */,
 				89594325180CB350007DEC5D /* PDTAppDelegate.m in Sources */,
 				8959434C180CB47B007DEC5D /* PDTSimpleCalendarViewHeader.m in Sources */,
+				AD0F60401BE36E8D0003B1F4 /* PDTSimpleCalendarViewCell_iPad.m in Sources */,
 				8959434D180CB47B007DEC5D /* PDTSimpleCalendarViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

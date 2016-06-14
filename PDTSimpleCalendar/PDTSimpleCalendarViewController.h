@@ -10,6 +10,8 @@
 
 #import "PDTSimpleCalendarViewWeekdayHeader.h"
 
+static const NSCalendarUnit kCalendarUnitYMD = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay;
+
 @protocol PDTSimpleCalendarViewDelegate;
 
 /**
@@ -152,5 +154,10 @@
  *  @param date       the date (Midnight GMT)
  */
 - (UIColor *)simpleCalendarViewController:(PDTSimpleCalendarViewController *)controller textColorForDate:(NSDate *)date;
+
+/**
+ *
+ */
+- (NSInteger)simpleCalendarViewController:(PDTSimpleCalendarViewController *)controller numberOfItemsForDate:(NSDate *)date;
 
 @end;
